@@ -2,6 +2,8 @@
 
 Documento de arquitetura do MVP. Fonte de verdade para a implementação.
 
+**Repositório:** https://github.com/Leosurname/memory-system (público)
+
 ---
 
 ## 1. Visão
