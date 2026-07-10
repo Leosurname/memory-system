@@ -156,7 +156,27 @@ Memory system/
 
 ---
 
-## 10. Fora do MVP (fases futuras)
+## 10. Sync entre computadores via Wi-Fi (issue #5)
+
+`npm run sync` em cada máquina na mesma rede Wi-Fi sobe o daemon
+(`scripts/sync-daemon.mjs`, Node puro, sem dependências):
+
+- **Descoberta**: broadcast UDP (porta 47777) a cada 1s; peers expiram após 5s
+  sem anúncio. Máquinas se encontram sozinhas — zero configuração.
+- **Replicação** (HTTP na LAN, porta 7777): push imediato quando
+  `memories.json` muda (file watcher, debounce 150ms) + anti-entropia (pull a
+  cada 2s) para cobrir pacotes perdidos. **Atraso medido: ~170ms** (limite: 2s).
+- **Merge sem conflitos**: união por `id` — memórias são imutáveis e
+  append-only (semântica de G-Set/CRDT). O hash dos ids evita loops de
+  propagação da própria escrita.
+- O Vite detecta a escrita do daemon e recarrega o app → a árvore atualiza na
+  outra máquina em tempo real.
+- Env p/ testes: `MEMORY_DATA` (path do JSON) e `SYNC_PORT` permitem simular
+  2 máquinas num host só.
+
+---
+
+## 11. Fora do MVP (fases futuras)
 
 Resumo automático de sessões do Claude Code (`~/.claude/projects/.../*.jsonl`)
 · rótulos de cluster via LLM · slider de granularidade do `simplify` · remoção/
@@ -164,7 +184,7 @@ edição via CLI · export · temas.
 
 ---
 
-## 11. Critérios de aceite (verificados em 2026-07-10)
+## 12. Critérios de aceite (verificados em 2026-07-10)
 
 1. ✅ `npm run dev` sobe sem erro.
 2. ✅ `npm run add-memory` grava memória com embedding 384-dim no JSON.
@@ -175,3 +195,5 @@ edição via CLI · export · temas.
 6. ✅ Persistência em arquivo → sobrevive a reload e a restart do browser.
 7. ✅ `cluster.ts` testado isolado (2 temas → 2 galhos; casos-limite 0/1).
 8. ✅ `npm run build` sem erros de TypeScript.
+9. ✅ Sync Wi-Fi: 2 daemons simulados se descobrem, fazem sync inicial completo
+   e replicam memória nova em ~170ms (≤2s exigidos).

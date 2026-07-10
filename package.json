@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "preview": "vite preview",
-    "add-memory": "node scripts/add-memory.mjs"
+    "add-memory": "node scripts/add-memory.mjs",
+    "sync": "node scripts/sync-daemon.mjs"
   },
   "dependencies": {
     "@huggingface/transformers": "^3.5.0",
