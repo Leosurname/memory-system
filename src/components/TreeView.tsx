@@ -59,7 +59,12 @@ export function TreeView({ filter }: { filter: string }) {
   const count = useVaultStore((s) => s.order.length)
 
   if (count === 0) {
-    return <p className="tree-empty">Nenhuma memória ainda. Adicione um resumo acima.</p>
+    return (
+      <p className="tree-empty">
+        Nenhuma memória ainda. O Claude grava memórias via terminal
+        (<code>npm run add-memory</code>).
+      </p>
+    )
   }
   return (
     <div className="tree-view">
