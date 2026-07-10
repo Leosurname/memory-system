@@ -24,6 +24,12 @@ A "árvore matemática" = **dendrograma** do clustering aglomerativo:
 
 ## 2. Fluxo principal
 
+A gravação é automatizada pela **skill `/remember`** (issue #4), versionada em
+`.claude/skills/remember/SKILL.md` e instalada em `~/.claude/skills/remember/`
+(disponível de qualquer sessão). Invocada por pedido ("salva isso", "grava na
+memória", `/remember`) ou proativamente ao final de trabalho relevante, ela faz
+o Claude executar este pipeline:
+
 ```
 Claude resume a conversa
         │
